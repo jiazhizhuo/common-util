@@ -103,7 +103,7 @@ public class ConnectionUtil{
             while(rs.next()){// 遍历每一行
                 rowsMap = new HashMap<String,Object>();
                 for(int i=1; i<=colmns; i++){
-                    rowsMap.put(metaData.getColumnName(i), rs.getObject(i));
+                    rowsMap.put(metaData.getColumnLabel(i), rs.getObject(i));
                 }
                 resultList.add(rowsMap);
             }
