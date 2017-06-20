@@ -1,5 +1,6 @@
 package com.jzz.util.jdbc;
 
+
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -63,24 +64,37 @@ public class ConnectionUtil{
         }
         return affectCount;
     }
-    public static void close(ResultSet rs) throws SQLException {
-        if(rs!=null && !rs.isClosed()){
-            rs.close();
-        }
+    public static void close(ResultSet rs) {
+        try {
+			if(rs!=null && !rs.isClosed()){
+			    rs.close();
+			}
+		} catch (SQLException e) {
+			logger.error("Close ResultSet Error", e);
+		}
+        
     }
-    public static void close(PreparedStatement stmt) throws SQLException {
-        if(stmt!=null && !stmt.isClosed()){
-            stmt.close();
-        }
+    public static void close(PreparedStatement stmt){
+        try {
+			if(stmt!=null && !stmt.isClosed()){
+			    stmt.close();
+			}
+		} catch (SQLException e) {
+			logger.error("Close PreparedStatement Error", e);
+		}
     }
-    public static void close(Connection conn) throws SQLException{
-        if(conn!=null && !conn.isClosed()){
-            conn.close();
-        }
+    public static void close(Connection conn) {
+        try {
+			if(conn!=null && !conn.isClosed()){
+			    conn.close();
+			}
+		} catch (SQLException e) {
+			logger.error("Close Connection Error", e);
+		}
     }
 
     /**
-     * 功能：读取 ResultSet 到 List<Map<String, Object>>
+     * 功能：读取 ResultSet 到 List<Map<String, Object>>  Object 为数据库类型所对应的java类型
      * 需设置 ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY
      * @param rs
      * @return
@@ -146,7 +160,6 @@ public class ConnectionUtil{
             stmt.setBigDecimal(1, (BigDecimal) object);
         }else{
             stmt.setObject(i, object);
-//          throw new Exception(" 不识别的类型 in setStmtParam(...)  ");
         }
     }
 
