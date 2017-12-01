@@ -150,17 +150,47 @@ public class ConnectionUtil{
      * @throws Exception
      */
     public static void setStmtParam(PreparedStatement stmt, int i, Object object) throws Exception {
-        if(object.getClass() == String.class){
+    	if(object == null) {
+            stmt.setObject(i, object);
+    	}else if(object.getClass() == String.class){
             stmt.setString(i, (String) object);
         }else if(object.getClass() == Double.class){
             stmt.setDouble(i, (Double) object);
         }else if(object.getClass() == Long.class){
             stmt.setLong(i, (Long) object);
         }else if(object.getClass() == BigDecimal.class){
-            stmt.setBigDecimal(1, (BigDecimal) object);
+            stmt.setBigDecimal(i, (BigDecimal) object);
         }else{
             stmt.setObject(i, object);
         }
     }
-
+    
+	/** 保存 
+	 * @param conn
+	 * @param tableName 表
+	 * @param properties <字段名, 值>
+	 * @return
+	 * @throws Exception
+	 */
+	public static Integer insert(Connection conn, String tableName, Map<String, Object> properties) throws Exception {
+		List<String> columns = new ArrayList<String>(properties.size()+1);
+		List<Object> values = new ArrayList<Object>(properties.size()+1);
+				
+		for (Map.Entry<String, Object> property : properties.entrySet()) {
+			columns.add( property.getKey() );
+			values.add( property.getValue() );
+		}
+		
+		StringBuffer columnsBuf = new StringBuffer();
+		StringBuffer questionBuf = new StringBuffer();
+		for(String col : columns) {
+			columnsBuf.append(col).append(",");
+			questionBuf.append("?").append(",");
+		}
+		String columnsStr = columnsBuf.substring(0, columnsBuf.length()-1);
+		String questionStr = questionBuf.substring(0, questionBuf.length()-1);
+		
+		String insertSql = " insert into t_ability ("+columnsStr+") values ("+questionStr+") ";
+		return ConnectionUtil.executeUpdate(conn, insertSql, values.toArray());
+	}
 }
