@@ -13,6 +13,12 @@
 			<artifactId>slf4j-api</artifactId>
 			<version>${slf4j.version}</version>
 		</dependency>
+		<dependency>
+		    <groupId>junit</groupId>
+		    <artifactId>junit</artifactId>
+		    <version>4.11</version>
+		    <scope>test</scope>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -25,7 +31,7 @@
 					<source>${jdk.version}</source>
 					<target>${jdk.version}</target>
 					<showWarnings>true</showWarnings>
-					<encoding>${project.build.sourceEncoding}</encoding>
+					<encoding>UTF-8</encoding>
 					<!-- 指定编码格式，否则在DOS下运行mvn 
 					compile命令时会出现莫名的错误，因为系统默认使用GBK编码 -->
 				</configuration>
