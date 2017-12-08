@@ -22,10 +22,10 @@ public class TestNashorn {
 		liquidationFactors.add(new LiquidationBaseQuote("GOODS_PRICES", "goodsPrices",2));
 		
 		
-		//mapping GOODS_CATALOG:goodsCatalog:string; {GOODS_PRICES}:goodsPrices,number;
+		//mapping GOODS_CATALOG:goodsCatalog:string; GOODS_PRICES:goodsPrices,number;
 		Map<String, Object> orderInfo = new HashMap<String,Object>();
 		orderInfo.put("goodsCatalog", "T_001");
-		orderInfo.put("goodsPrices", "98");
+		orderInfo.put("goodsPrices", 98);
 		orderInfo.put("goodsName", "商品001");
 		
 		//初始化清算因子
@@ -45,7 +45,7 @@ public class TestNashorn {
 	}
 	
 
-	private static StringBuffer generateVariableInit(List<LiquidationBaseQuote> liquidationFactors,
+	public static StringBuffer generateVariableInit(List<LiquidationBaseQuote> liquidationFactors,
 			Map<String, Object> orderInfo) {
 		StringBuffer sb = new StringBuffer(128);
 		String quoteValue = null;
@@ -88,42 +88,3 @@ public class TestNashorn {
 	  }
 }
 
-class LiquidationBaseQuote{
-	/**
-	 * 引用别名(必填项)
-	 */
-	private String quoteName = null;
-	/**
-	 * 引用值(必填项)
-	 */
-	private String quoteValue = null;
-	/**
-	 * 值类型(必填项)
-	 * 1 string, 2 number
-	 */
-	private int valueType = -1;
-	public String getQuoteName() {
-		return quoteName;
-	}
-	public void setQuoteName(String quoteName) {
-		this.quoteName = quoteName;
-	}
-	public String getQuoteValue() {
-		return quoteValue;
-	}
-	public void setQuoteValue(String quoteValue) {
-		this.quoteValue = quoteValue;
-	}
-	public int getValueType() {
-		return valueType;
-	}
-	public void setValueType(int valueType) {
-		this.valueType = valueType;
-	}
-	public LiquidationBaseQuote(String quoteName, String quoteValue, int valueType) {
-		super();
-		this.quoteName = quoteName;
-		this.quoteValue = quoteValue;
-		this.valueType = valueType;
-	}
-}
