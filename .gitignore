@@ -4,8 +4,9 @@
 # Compiled class file
 *.class
 
-# project
 *.project
+*.classpath
+*.settings
 
 # Log file
 *.log
